@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { Geist_Sans, JetBrains_Mono } from "next/font/google";
+import { Geist } from "next/font/google";
+import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 
-const geistSans = Geist_Sans({
+const geistSans = Geist({
   subsets: ["latin"],
   variable: "--font-sans",
 });
