@@ -8,7 +8,7 @@ export function MainNav() {
   const pathname = usePathname()
 
   return (
-    <div className="mr-4 hidden md:flex">
+    <div className="mr-4 hidden md:flex pl-4">
       <Link href="/" className="mr-6 flex items-center space-x-2">
         <span className="font-bold text-xl bg-gradient-to-r from-green-400 to-cyan-500 bg-clip-text text-transparent">
           Backend101
@@ -16,15 +16,15 @@ export function MainNav() {
       </Link>
       <nav className="flex items-center space-x-6 text-sm font-medium">
         <Link
-          href="/environment"
+          href="/"
           className={cn(
             "transition-colors hover:text-foreground/80",
-            pathname === "/environment" || pathname.startsWith("/environment/")
+            pathname === "/"
               ? "text-foreground"
               : "text-foreground/60"
           )}
         >
-          Environment
+          Home
         </Link>
         <Link
           href="/nodejs"
@@ -60,17 +60,6 @@ export function MainNav() {
           REST API
         </Link>
         <Link
-          href="/project-structure"
-          className={cn(
-            "transition-colors hover:text-foreground/80",
-            pathname === "/project-structure" || pathname.startsWith("/project-structure/")
-              ? "text-foreground"
-              : "text-foreground/60"
-          )}
-        >
-          Project Structure
-        </Link>
-        <Link
           href="/mongodb"
           className={cn(
             "transition-colors hover:text-foreground/80",
@@ -80,28 +69,6 @@ export function MainNav() {
           )}
         >
           MongoDB
-        </Link>
-        <Link
-          href="/tools-testing"
-          className={cn(
-            "transition-colors hover:text-foreground/80",
-            pathname === "/tools-testing" || pathname.startsWith("/tools-testing/")
-              ? "text-foreground"
-              : "text-foreground/60"
-          )}
-        >
-          Tools & Testing
-        </Link>
-        <Link
-          href="/snippets"
-          className={cn(
-            "transition-colors hover:text-foreground/80",
-            pathname === "/snippets" || pathname.startsWith("/snippets/")
-              ? "text-foreground"
-              : "text-foreground/60"
-          )}
-        >
-          Snippets
         </Link>
       </nav>
     </div>
