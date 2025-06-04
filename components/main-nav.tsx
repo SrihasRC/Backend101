@@ -70,6 +70,28 @@ export function MainNav() {
         >
           MongoDB
         </Link>
+        <Link
+          href="/auth"
+          className={cn(
+            "transition-colors hover:text-foreground/80",
+            pathname === "/auth" || pathname.startsWith("/auth/")
+              ? "text-foreground"
+              : "text-foreground/60"
+          )}
+        >
+          Auth
+        </Link>
+        <Link
+          href="/testing"
+          className={cn(
+            "transition-colors hover:text-foreground/80",
+            pathname === "/testing" || pathname.startsWith("/testing/")
+              ? "text-foreground"
+              : "text-foreground/60"
+          )}
+        >
+          Testing
+        </Link>
       </nav>
     </div>
   )
