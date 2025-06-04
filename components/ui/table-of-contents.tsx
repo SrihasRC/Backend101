@@ -326,9 +326,20 @@ export function TableOfContents({
               )}
               onClick={(e) => {
                 e.preventDefault();
-                document.getElementById(heading.id)?.scrollIntoView({
-                  behavior: "smooth",
-                });
+                // Get the element to scroll to
+                const targetElement = document.getElementById(heading.id);
+                if (targetElement) {
+                  // Calculate position with offset to account for fixed header
+                  const headerOffset = 100; // Adjust this value based on your header height
+                  const elementPosition = targetElement.getBoundingClientRect().top;
+                  const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                  // Scroll to the adjusted position
+                  window.scrollTo({
+                    top: offsetPosition,
+                    behavior: "smooth"
+                  });
+                }
                 setActiveId(heading.id);
               }}
             >
@@ -347,11 +358,34 @@ export function TableOfContents({
   };
 
   return (
-    <div className={cn("text-sm", className)}>
+    <div className={cn("text-sm sticky top-20", className)}>
       <div className="opacity-70 mb-2 text-sm">On this page</div>
-      <div className="space-y-1">
+      <div className="space-y-1 max-h-[calc(100vh-10rem)] overflow-y-auto scrollbar-hide">
         {renderHeadings(buildNestedHeadings(headings))}
       </div>
     </div>
   );
+}
+
+// Add this custom CSS for scrollbar hiding
+// Define a utility class that hides the scrollbar but keeps scrolling functionality
+const scrollbarHideStyles = `
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+`;
+
+// Add the styles to the document
+if (typeof document !== "undefined") {
+  // Only run in browser environment
+  const style = document.createElement("style");
+  style.textContent = scrollbarHideStyles;
+  document.head.appendChild(style);
 }
