@@ -1,11 +1,10 @@
 "use client"
 
 import Link from "next/link"
-import { Search } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { MainNav } from "@/components/main-nav"
+import { SearchCommand } from "@/components/search/search-command"
 
 export function SiteHeader() {
   return (
@@ -14,14 +13,7 @@ export function SiteHeader() {
         <MainNav />
         <div className="flex flex-1 items-center justify-end space-x-4">
           <div className="w-full flex-1 md:w-auto md:flex-none">
-            <div className="relative">
-              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-              <Input
-                type="search"
-                placeholder="Search documentation..."
-                className="w-full bg-background pl-8 md:w-[200px] lg:w-[250px]"
-              />
-            </div>
+            <SearchCommand />
           </div>
           <nav className="flex items-center">
             <Button variant="outline" size="icon" asChild>
