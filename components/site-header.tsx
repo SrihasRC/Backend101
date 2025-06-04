@@ -17,7 +17,7 @@ export function SiteHeader() {
           </div>
           <nav className="flex items-center">
             <Button variant="outline" size="icon" asChild>
-              <Link href="https://github.com/yourusername/backend101" target="_blank" rel="noreferrer">
+              <Link href="https://github.com/SrihasRC/Backend101" target="_blank" rel="noreferrer">
                 <svg
                   className="h-5 w-5"
                   fill="currentColor"

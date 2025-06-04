@@ -6,26 +6,109 @@ export default function Home() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative overflow-hidden py-20 md:py-32 bg-gradient-to-b from-black to-zinc-900">
-        <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div>
-        <div className="relative container mx-auto px-4 md:px-6">
-          <div className="flex flex-col items-center text-center space-y-4">
-            <div className="space-y-2">
-              <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl md:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-cyan-500">
-                Backend101
+      <section className="relative overflow-hidden min-h-[calc(100vh-56px)] flex items-center justify-center bg-gradient-to-b from-black via-zinc-950 to-zinc-900">
+        <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]">
+          {/* Animated particles/dots effect */}
+          <div className="absolute inset-0 opacity-30">
+            <div
+              className="absolute h-2 w-2 rounded-full bg-cyan-500 animate-ping"
+              style={{
+                top: "20%",
+                left: "10%",
+                animationDelay: "0s",
+                animationDuration: "4s",
+              }}
+            ></div>
+            <div
+              className="absolute h-2 w-2 rounded-full bg-green-500 animate-ping"
+              style={{
+                top: "70%",
+                left: "20%",
+                animationDelay: "0.5s",
+                animationDuration: "3s",
+              }}
+            ></div>
+            <div
+              className="absolute h-2 w-2 rounded-full bg-purple-500 animate-ping"
+              style={{
+                top: "40%",
+                left: "80%",
+                animationDelay: "1s",
+                animationDuration: "5s",
+              }}
+            ></div>
+            <div
+              className="absolute h-2 w-2 rounded-full bg-yellow-500 animate-ping"
+              style={{
+                top: "80%",
+                left: "70%",
+                animationDelay: "1.5s",
+                animationDuration: "4.5s",
+              }}
+            ></div>
+            <div
+              className="absolute h-2 w-2 rounded-full bg-blue-500 animate-ping"
+              style={{
+                top: "30%",
+                left: "60%",
+                animationDelay: "2s",
+                animationDuration: "3.5s",
+              }}
+            ></div>
+          </div>
+        </div>
+        <div className="relative container mx-auto px-4 md:px-6 py-16 md:py-24">
+          <div className="flex flex-col items-center text-center space-y-8">
+            <div className="space-y-4">
+              <div className="inline-block p-1 bg-gradient-to-r from-green-500/20 to-cyan-500/20 rounded-lg mb-4">
+                <span className="text-xs font-mono text-green-400 px-3 py-1">
+                  Backend Development Simplified
+                </span>
+              </div>
+              <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl">
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-cyan-400 to-blue-500 animate-gradient">
+                  Backend101
+                </span>
               </h1>
-              <p className="mx-auto max-w-[700px] text-zinc-400 md:text-xl">
+              <p className="mx-auto max-w-[700px] text-zinc-400 md:text-xl lg:text-2xl">
                 A modern cheatsheet for Node.js and Express.js backend
                 development.
               </p>
             </div>
-            <div className="space-x-4">
-              <Button asChild variant="default" size="lg" className="bg-green-600 hover:bg-green-700">
+            <div className="space-x-4 pt-6">
+              <Button
+                asChild
+                variant="default"
+                size="lg"
+                className="bg-gradient-to-r from-green-600 to-cyan-600 hover:from-green-700 hover:to-cyan-700 border-0 shadow-lg shadow-green-900/20"
+              >
                 <Link href="/nodejs">Get Started</Link>
               </Button>
-              <Button asChild variant="outline" size="lg">
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="border-zinc-700 hover:bg-zinc-800/50 shadow-lg"
+              >
                 <Link href="/project-structure">View Project Structure</Link>
               </Button>
+            </div>
+            <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="text-zinc-500"
+              >
+                <path d="M12 5v14"></path>
+                <path d="m19 12-7 7-7-7"></path>
+              </svg>
             </div>
           </div>
         </div>
@@ -271,39 +354,6 @@ app.listen(PORT, () => {
           </div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="border-t border-zinc-800 bg-black py-6">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="mb-4 md:mb-0">
-              <p className="text-sm text-zinc-400">
-                © 2025 Backend101. MIT License.
-              </p>
-            </div>
-            <div className="flex space-x-4">
-              <Link
-                href="https://github.com/yourusername/backend101"
-                className="text-sm text-zinc-400 hover:text-white"
-              >
-                GitHub
-              </Link>
-              <Link
-                href="/snippets"
-                className="text-sm text-zinc-400 hover:text-white"
-              >
-                Snippets
-              </Link>
-              <Link
-                href="/tools-testing"
-                className="text-sm text-zinc-400 hover:text-white"
-              >
-                Tools & Testing
-              </Link>
-            </div>
-          </div>
-        </div>
-      </footer>
     </>
   );
 }
