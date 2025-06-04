@@ -82,7 +82,7 @@ export default function AuthenticationSecurityPage() {
 import { User } from '../models/User.js';
 
 // Register a new user with password hashing
-async function registerUser(email, password) {
+const registerUser = async (email, password) => {
   try {
     // Generate a salt
     const salt = await bcrypt.genSalt(10);
@@ -104,7 +104,7 @@ async function registerUser(email, password) {
 }
 
 // Verify password during login
-async function verifyUser(email, password) {
+const verifyUser = async (email, password) => {
   try {
     // Find user by email
     const user = await User.findOne({ email });

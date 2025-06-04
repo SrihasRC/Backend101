@@ -79,13 +79,13 @@ export default function MongoDBPage() {
                 language="javascript"
                 title="MongoDB Native Driver"
                 code={`// Using the MongoDB native driver
-const { MongoClient } = require('mongodb');
+import { MongoClient } from 'mongodb';
 
 // Connection URI
 const uri = 'mongodb://localhost:27017/myapp';
 const client = new MongoClient(uri);
 
-async function connect() {
+const connect = async () => {
   try {
     // Connect to the MongoDB server
     await client.connect();
@@ -117,7 +117,7 @@ connect()
                 language="javascript"
                 title="Mongoose ODM"
                 code={`// Using Mongoose ODM
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 // Connection URI
 const uri = 'mongodb://localhost:27017/myapp';
@@ -175,7 +175,7 @@ process.on('SIGINT', async () => {
               language="javascript"
               title="Creating a Mongoose Schema and Model"
               code={`// User schema and model example
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 // Define a schema
@@ -275,7 +275,7 @@ userSchema.pre('save', async function(next) {
 // Create the model from the schema
 const User = mongoose.model('User', userSchema);
 
-module.exports = User;`}
+export default User;`}
             />
 
             <h3 className="text-xl font-medium mt-8 mb-3">Schema Types and Validation</h3>
@@ -375,7 +375,7 @@ module.exports = User;`}
               language="javascript"
               title="Create Operations"
               code={`// Create a new document
-const User = require('./models/User');
+import User from './models/User';
 
 // Method 1: Create instance and save
 const createUser = async () => {
@@ -438,7 +438,7 @@ const insertManyUsers = async (usersData) => {
               language="javascript"
               title="Read Operations"
               code={`// Basic queries
-const User = require('./models/User');
+import User from './models/User';
 
 // Find all users
 const findAllUsers = async () => {
@@ -545,7 +545,7 @@ const getUserWithPosts = async (userId) => {
               language="javascript"
               title="Update Operations"
               code={`// Update operations
-const User = require('./models/User');
+import User from './models/User';
 
 // Update a user by ID using findByIdAndUpdate
 const updateUserById = async (userId, updateData) => {
@@ -651,31 +651,17 @@ const atomicUpdates = async (userId) => {
               language="javascript"
               title="Delete Operations"
               code={`// Delete operations
-const User = require('./models/User');
+import User from './models/User';
 
 // Delete one user by ID
 const deleteUserById = async (userId) => {
   try {
-    const deletedUser = await User.findByIdAndDelete(userId);
-    
-    if (!deletedUser) {
+    const result = await User.findByIdAndDelete(userId);
+    if (!result) {
       console.log('User not found');
       return null;
     }
-    
-    console.log('User deleted:', deletedUser);
-    return deletedUser;
-  } catch (error) {
-    console.error('Error deleting user:', error.message);
-    throw error;
-  }
-};
-
-// Delete one document that matches criteria
-const deleteOneUser = async (filter) => {
-  try {
-    const result = await User.deleteOne(filter);
-    console.log(\`Deleted: \${result.deletedCount}\`);
+    console.log('User deleted');
     return result;
   } catch (error) {
     console.error('Error deleting user:', error.message);
@@ -683,7 +669,19 @@ const deleteOneUser = async (filter) => {
   }
 };
 
-// Delete many documents
+// Delete one document matching criteria
+const deleteOneUser = async (filter) => {
+  try {
+    const result = await User.deleteOne(filter);
+    console.log(\`Deleted \${result.deletedCount} user\`);
+    return result;
+  } catch (error) {
+    console.error('Error deleting user:', error.message);
+    throw error;
+  }
+};
+
+// Delete multiple documents
 const deleteInactiveUsers = async () => {
   try {
     const result = await User.deleteMany({ active: false });
@@ -695,24 +693,17 @@ const deleteInactiveUsers = async () => {
   }
 };
 
-// Soft delete (mark as inactive rather than actually deleting)
+// Soft delete (updating instead of deleting)
 const softDeleteUser = async (userId) => {
   try {
-    const updatedUser = await User.findByIdAndUpdate(
+    const result = await User.findByIdAndUpdate(
       userId,
       { active: false, deletedAt: new Date() },
       { new: true }
     );
-    
-    if (!updatedUser) {
-      console.log('User not found');
-      return null;
-    }
-    
-    console.log('User soft deleted:', updatedUser);
-    return updatedUser;
+    return result;
   } catch (error) {
-    console.error('Error soft deleting user:', error.message);
+    console.error('Error soft-deleting user:', error.message);
     throw error;
   }
 };`}

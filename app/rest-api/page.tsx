@@ -178,10 +178,10 @@ export default function RestApiPage() {
               language="javascript"
               title="User Controller (controllers/userController.js)"
               code={`// User controller with CRUD operations
-const User = require('../models/User');
+import User from '../models/User.js';
 
 // GET /api/users - Get all users
-exports.getAllUsers = async (req, res, next) => {
+export const getAllUsers = async (req, res, next) => {
   try {
     // Support pagination
     const page = parseInt(req.query.page) || 1;
@@ -217,7 +217,7 @@ exports.getAllUsers = async (req, res, next) => {
 };
 
 // GET /api/users/:id - Get single user
-exports.getUserById = async (req, res, next) => {
+export const getUserById = async (req, res, next) => {
   try {
     const user = await User.findById(req.params.id).select('-password');
     
@@ -245,7 +245,7 @@ exports.getUserById = async (req, res, next) => {
 };
 
 // POST /api/users - Create new user
-exports.createUser = async (req, res, next) => {
+export const createUser = async (req, res, next) => {
   try {
     // Validate request body (simplified)
     if (!req.body.email || !req.body.name) {
@@ -277,7 +277,7 @@ exports.createUser = async (req, res, next) => {
 };
 
 // PUT /api/users/:id - Update user (full replacement)
-exports.updateUser = async (req, res, next) => {
+export const updateUser = async (req, res, next) => {
   try {
     const user = await User.findByIdAndUpdate(
       req.params.id,
@@ -305,7 +305,7 @@ exports.updateUser = async (req, res, next) => {
 };
 
 // PATCH /api/users/:id - Update user (partial update)
-exports.patchUser = async (req, res, next) => {
+export const patchUser = async (req, res, next) => {
   try {
     const user = await User.findByIdAndUpdate(
       req.params.id,
@@ -333,7 +333,7 @@ exports.patchUser = async (req, res, next) => {
 };
 
 // DELETE /api/users/:id - Delete user
-exports.deleteUser = async (req, res, next) => {
+export const deleteUser = async (req, res, next) => {
   try {
     const user = await User.findByIdAndDelete(req.params.id);
     
@@ -354,19 +354,20 @@ exports.deleteUser = async (req, res, next) => {
             <CodeBlock
               language="javascript"
               title="User Routes (routes/userRoutes.js)"
-              code={`const express = require('express');
-const router = express.Router();
-const {
+              code={`import express from 'express';
+import {
   getAllUsers,
   getUserById,
   createUser,
   updateUser,
   patchUser,
   deleteUser
-} = require('../controllers/userController');
+} from '../controllers/userController.js';
 
 // Middleware example: Authentication
-const { protect, authorize } = require('../middleware/auth');
+import { protect, authorize } from '../middleware/auth.js';
+
+const router = express.Router();
 
 router
   .route('/')
@@ -380,18 +381,23 @@ router
   .patch(protect, authorize('admin', 'user'), patchUser)
   .delete(protect, authorize('admin'), deleteUser);
 
-module.exports = router;`}
+export default router;`}
             />
 
             <CodeBlock
               language="javascript"
               title="Main App (app.js)"
-              code={`const express = require('express');
-const cors = require('cors');
-const helmet = require('helmet');
-const rateLimit = require('express-rate-limit');
-const errorHandler = require('./middleware/errorHandler');
-const connectDB = require('./config/db');
+              code={`import express from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
+import errorHandler from './middleware/errorHandler.js';
+import connectDB from './config/db.js';
+
+// Import routes
+import userRoutes from './routes/userRoutes.js';
+import authRoutes from './routes/authRoutes.js';
+import productRoutes from './routes/productRoutes.js';
 
 // Initialize Express app
 const app = express();
@@ -415,9 +421,9 @@ const limiter = rateLimit({
 app.use('/api/', limiter);
 
 // Mount routers
-app.use('/api/users', require('./routes/userRoutes'));
-app.use('/api/auth', require('./routes/authRoutes'));
-app.use('/api/products', require('./routes/productRoutes'));
+app.use('/api/users', userRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/products', productRoutes);
 
 // Root route
 app.get('/', (req, res) => {
@@ -437,7 +443,9 @@ app.use(errorHandler);
 
 // Start server
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(\`Server running on port \${PORT}\`));`}
+app.listen(PORT, () => console.log(\`Server running on port \${PORT}\`));
+
+export default app;`}
             />
           </section>
 
@@ -536,18 +544,19 @@ const errorHandler = (err, req, res, next) => {
   });
 };
 
-module.exports = errorHandler;`}
+export { ErrorResponse };
+export default errorHandler;`}
             />
             
             <h3 className="text-xl font-medium mt-8 mb-3">Authentication Middleware</h3>
             <CodeBlock
               language="javascript"
               title="middleware/auth.js"
-              code={`const jwt = require('jsonwebtoken');
-const User = require('../models/User');
+              code={`import jwt from 'jsonwebtoken';
+import User from '../models/User.js';
 
 // Protect routes
-exports.protect = async (req, res, next) => {
+export const protect = async (req, res, next) => {
   let token;
   
   // Get token from Authorization header
@@ -587,7 +596,7 @@ exports.protect = async (req, res, next) => {
 };
 
 // Grant access to specific roles
-exports.authorize = (...roles) => {
+export const authorize = (...roles) => {
   return (req, res, next) => {
     if (!req.user) {
       return res.status(401).json({
@@ -621,9 +630,9 @@ exports.authorize = (...roles) => {
             <CodeBlock
               language="javascript"
               title="Setting up Swagger for Express API"
-              code={`const express = require('express');
-const swaggerJsDoc = require('swagger-jsdoc');
-const swaggerUi = require('swagger-ui-express');
+              code={`import express from 'express';
+import swaggerJsDoc from 'swagger-jsdoc';
+import swaggerUi from 'swagger-ui-express';
 
 const app = express();
 
@@ -775,14 +784,15 @@ app.listen(3000, () => console.log('Server running on port 3000'));`}
  */
 
 // This would go in userRoutes.js file
-const express = require('express');
+import express from 'express';
+import { getAllUsers, getUserById } from '../controllers/userController.js';
+
 const router = express.Router();
-const { getAllUsers, getUserById } = require('../controllers/userController');
 
 router.route('/').get(getAllUsers);
 router.route('/:id').get(getUserById);
 
-module.exports = router;`}
+export default router;`}
             />
 
             <div className="bg-green-900/30 border border-green-800 rounded-lg p-6 my-6">

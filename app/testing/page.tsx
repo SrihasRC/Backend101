@@ -136,19 +136,19 @@ export default {
               language="javascript"
               title="Example arithmetic functions and tests (ES Modules)"
               code={`// src/utils/math.ts
-export function add(a: number, b: number): number {
+export const add = (a: number, b: number): number => {
   return a + b;
 }
 
-export function subtract(a: number, b: number): number {
+export const subtract = (a: number, b: number): number => {
   return a - b;
 }
 
-export function multiply(a: number, b: number): number {
+export const multiply = (a: number, b: number): number => {
   return a * b;
 }
 
-export function divide(a: number, b: number): number {
+export const divide = (a: number, b: number): number => {
   if (b === 0) {
     throw new Error('Division by zero is not allowed');
   }

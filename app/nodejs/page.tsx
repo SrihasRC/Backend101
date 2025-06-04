@@ -61,8 +61,8 @@ setImmediate(() => {
 });
 
 // I/O operation
-const fs = require('fs');
-fs.readFile(__filename, () => {
+import { readFile } from 'fs';
+readFile(import.meta.url, () => {
   console.log('I/O callback');
   
   // Inside I/O callback
@@ -118,13 +118,13 @@ Inner setTimeout
                   language="javascript"
                   title="math.js (CommonJS)"
                   code={`// Exporting in CommonJS
-function add(a, b) {
+const add = (a, b) => {
   return a + b;
-}
+};
 
-function subtract(a, b) {
+const subtract = (a, b) => {
   return a - b;
-}
+};
 
 module.exports = {
   add,
@@ -161,13 +161,13 @@ console.log(add(10, 5));         // 15`}
                   language="javascript"
                   title="math.mjs (ESM)"
                   code={`// Exporting in ES Modules
-export function add(a, b) {
+export const add = (a, b) => {
   return a + b;
-}
+};
 
-export function subtract(a, b) {
+export const subtract = (a, b) => {
   return a - b;
-}
+};
 
 // Default export
 export default {
@@ -215,7 +215,8 @@ console.log(mathLib.add(2, 2)); // 4`}
                 <CodeBlock
                   language="javascript"
                   title="fs-examples.js"
-                  code={`const fs = require('fs');
+                  code={`import * as fs from 'fs';
+import { promises as fsPromises } from 'fs';
 
 // Synchronous read (blocking)
 try {
@@ -235,14 +236,14 @@ fs.readFile('example.txt', 'utf8', (err, data) => {
 });
 
 // Using promises with fs.promises (Node.js >= 10)
-async function readFileAsync() {
+const readFileAsync = async () => {
   try {
-    const data = await fs.promises.readFile('example.txt', 'utf8');
+    const data = await fsPromises.readFile('example.txt', 'utf8');
     console.log('Promise read:', data);
   } catch (err) {
     console.error('Error reading file:', err);
   }
-}
+};
 readFileAsync();
 
 // Writing to files
@@ -284,7 +285,7 @@ fs.watch('example.txt', (eventType, fileName) => {
                 <CodeBlock
                   language="javascript"
                   title="http-server.js"
-                  code={`const http = require('http');
+                  code={`import http from 'http';
 
 // Create HTTP server
 const server = http.createServer((req, res) => {
@@ -370,7 +371,7 @@ http.get('http://example.com', (res) => {
                 <CodeBlock
                   language="javascript"
                   title="path-examples.js"
-                  code={`const path = require('path');
+                  code={`import path from 'path';
 
 // Platform-specific separator
 console.log(\`Path separator: \${path.sep}\`);  // '\' on Windows, '/' on UNIX
@@ -446,10 +447,10 @@ console.log(path.relative('/users/john', '/users/john/documents'));
                 <CodeBlock
                   language="javascript"
                   title="Callback Pattern"
-                  code={`const fs = require('fs');
+                  code={`import { readFile, writeFile } from 'fs';
 
 // Reading a file with callbacks
-fs.readFile('file.txt', 'utf8', (err, data) => {
+readFile('file.txt', 'utf8', (err, data) => {
   if (err) {
     console.error('Error reading file:', err);
     return;
@@ -459,7 +460,7 @@ fs.readFile('file.txt', 'utf8', (err, data) => {
   console.log('File content:', data);
   
   // Nested callback (callback hell begins)
-  fs.writeFile('output.txt', data.toUpperCase(), (err) => {
+  writeFile('output.txt', data.toUpperCase(), (err) => {
     if (err) {
       console.error('Error writing file:', err);
       return;
@@ -468,7 +469,7 @@ fs.readFile('file.txt', 'utf8', (err, data) => {
     console.log('File written successfully');
     
     // Another nested callback
-    fs.readFile('output.txt', 'utf8', (err, newData) => {
+    readFile('output.txt', 'utf8', (err, newData) => {
       if (err) {
         console.error('Error reading new file:', err);
         return;
@@ -480,7 +481,7 @@ fs.readFile('file.txt', 'utf8', (err, data) => {
 });
 
 // Custom function with callback
-function fetchUserData(userId, callback) {
+const fetchUserData = (userId, callback) => {
   // Simulate API call
   setTimeout(() => {
     if (userId < 1) {
@@ -496,7 +497,7 @@ function fetchUserData(userId, callback) {
     
     callback(null, user);
   }, 1000);
-}
+};
 
 // Using the custom callback function
 fetchUserData(1, (err, user) => {
@@ -519,7 +520,7 @@ fetchUserData(1, (err, user) => {
                 <CodeBlock
                   language="javascript"
                   title="Promise Pattern"
-                  code={`const fs = require('fs').promises; // Using promises version
+                  code={`import { promises as fs } from 'fs';
 
 // Reading a file with promises
 fs.readFile('file.txt', 'utf8')
@@ -541,7 +542,7 @@ fs.readFile('file.txt', 'utf8')
   });
 
 // Create a custom promise
-function fetchUserData(userId) {
+const fetchUserData = (userId) => {
   return new Promise((resolve, reject) => {
     // Simulate API call
     setTimeout(() => {
@@ -559,7 +560,7 @@ function fetchUserData(userId) {
       resolve(user);
     }, 1000);
   });
-}
+};
 
 // Using custom promise
 fetchUserData(1)
@@ -613,10 +614,10 @@ Promise.race([
                 <CodeBlock
                   language="javascript"
                   title="Async/Await Pattern"
-                  code={`const fs = require('fs').promises;
+                  code={`import { promises as fs } from 'fs';
 
 // Using async/await for file operations
-async function processFile() {
+const processFile = async () => {
   try {
     // Await each promise sequentially
     const data = await fs.readFile('file.txt', 'utf8');
@@ -633,7 +634,7 @@ async function processFile() {
     console.error('Error processing file:', err);
     throw err; // Re-throwing for promise rejection
   }
-}
+};
 
 // Call the async function
 processFile()
@@ -645,7 +646,7 @@ processFile()
   });
 
 // Using the custom promise function with async/await
-async function getMultipleUsers() {
+const getMultipleUsers = async () => {
   try {
     // Sequential requests
     const user1 = await fetchUserData(1);
@@ -670,7 +671,7 @@ async function getMultipleUsers() {
   } finally {
     console.log('User loading completed');
   }
-}
+};
 
 // Self-executing async function
 (async () => {

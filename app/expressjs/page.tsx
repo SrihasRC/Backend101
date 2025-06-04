@@ -30,7 +30,7 @@ export default function ExpressjsPage() {
               language="javascript"
               title="Basic Express Server"
               code={`// Import the express module
-const express = require('express');
+import express from 'express';
 
 // Create an Express application
 const app = express();
@@ -294,13 +294,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Third-party middleware
-const morgan = require('morgan');
+import morgan from 'morgan';
 app.use(morgan('dev')); // HTTP request logger
 
-const cors = require('cors');
+import cors from 'cors';
 app.use(cors()); // Enable CORS for all routes
 
-const cookieParser = require('cookie-parser');
+import cookieParser from 'cookie-parser';
 app.use(cookieParser()); // Parse cookies`}
             />
 
@@ -497,7 +497,7 @@ app.use((err, req, res, next) => {
                 language="javascript"
                 title="users.js - Router File"
                 code={`// users.js - A dedicated router module
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 
 // Middleware specific to this router
@@ -531,23 +531,22 @@ router.route('/:id/profile')
     res.json({ message: \`Profile updated for user \${req.params.id}\` });
   });
 
-module.exports = router;`}
+export default router;`}
               />
 
               <CodeBlock
                 language="javascript"
                 title="app.js - Main Application"
                 code={`// app.js - Main application file
-const express = require('express');
+import express from 'express';
+import usersRouter from './users.js';
+import productsRouter from './products.js';
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(express.json());
-
-// Import routers
-const usersRouter = require('./users');
-const productsRouter = require('./products');
 
 // Mount routers at specific paths
 app.use('/api/users', usersRouter);
@@ -560,7 +559,9 @@ app.get('/', (req, res) => {
 
 app.listen(PORT, () => {
   console.log(\`Server running on port \${PORT}\`);
-});`}
+});
+
+export default app;`}
               />
             </div>
             
