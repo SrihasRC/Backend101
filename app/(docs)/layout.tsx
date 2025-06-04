@@ -1,5 +1,5 @@
 import { ReactNode } from "react"
-import { Sidebar } from "@/components/sidebar"
+import { TableOfContents } from "@/components/ui/table-of-contents"
 
 interface DocsLayoutProps {
   children: ReactNode
@@ -160,8 +160,18 @@ export default function DocsLayout({ children, params }: DocsLayoutProps) {
 
   return (
     <div className="flex flex-col lg:flex-row">
-      <Sidebar items={sidebarItems} />
-      <div className="flex-1 px-4 pt-6 lg:px-8">{children}</div>
+      <div className="flex-1 px-4 pt-6 lg:px-8">
+        <div className="mx-auto max-w-6xl">
+          <div className="flex flex-col xl:flex-row gap-12">
+            <div className="flex-1" id="content-main">
+              {children}
+            </div>
+            <div className="hidden xl:block w-64 shrink-0">
+              <TableOfContents contentSelector="#content-main" />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
