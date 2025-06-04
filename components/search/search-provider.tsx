@@ -26,6 +26,7 @@ export function SearchProvider({ children }: { children: ReactNode }) {
 
   // Define search content (you can move this to a separate file if it grows)
   const searchableContent: SearchResult[] = [
+    // Node.js Section
     {
       title: "Node.js Event Loop",
       description: "Learn about the Node.js event loop and how it handles asynchronous operations",
@@ -38,6 +39,8 @@ export function SearchProvider({ children }: { children: ReactNode }) {
       href: "/nodejs#modules",
       section: "Node.js",
     },
+    
+    // Express.js Section
     {
       title: "Express.js Routing",
       description: "Create and manage routes in your Express.js applications",
@@ -50,6 +53,8 @@ export function SearchProvider({ children }: { children: ReactNode }) {
       href: "/expressjs#middleware",
       section: "Express.js",
     },
+    
+    // MongoDB Section
     {
       title: "MongoDB Introduction",
       description: "Get started with MongoDB, a NoSQL document database",
@@ -63,11 +68,27 @@ export function SearchProvider({ children }: { children: ReactNode }) {
       section: "MongoDB",
     },
     {
+      title: "MongoDB Indexing",
+      description: "Learn about indexing in MongoDB for improved query performance",
+      href: "/mongodb#mongodb-indexing",
+      section: "MongoDB",
+    },
+    
+    // REST API Section
+    {
       title: "REST API Design Principles",
       description: "Best practices for designing REST APIs",
       href: "/rest-api#rest-principles",
       section: "REST API",
     },
+    {
+      title: "API Endpoints",
+      description: "How to structure and implement REST API endpoints",
+      href: "/rest-api#api-endpoints",
+      section: "REST API",
+    },
+    
+    // Authentication Section
     {
       title: "JWT Authentication",
       description: "Implement JWT authentication in your Node.js applications",
@@ -75,11 +96,53 @@ export function SearchProvider({ children }: { children: ReactNode }) {
       section: "Authentication",
     },
     {
+      title: "Authentication Strategies",
+      description: "Different authentication strategies for web applications",
+      href: "/auth#auth-strategies",
+      section: "Authentication",
+    },
+    
+    // Testing Section
+    {
       title: "Unit Testing",
       description: "Learn about unit testing in Node.js applications",
       href: "/testing#unit-testing",
       section: "Testing",
     },
+    {
+      title: "Integration Testing",
+      description: "Approaches to integration testing in backend applications",
+      href: "/testing#integration-testing",
+      section: "Testing",
+    },
+    
+    // Environment Setup Section
+    {
+      title: "Development Environment",
+      description: "Setting up your development environment for backend development",
+      href: "/environment-setup#dev-environment",
+      section: "Environment Setup",
+    },
+    {
+      title: "Project Configuration",
+      description: "Configuring your backend project for development and production",
+      href: "/environment-setup#project-config",
+      section: "Environment Setup",
+    },
+    
+    // Project Structure Section
+    {
+      title: "Backend Architecture",
+      description: "Organizing your backend project structure for scalability",
+      href: "/project-structure#architecture",
+      section: "Project Structure",
+    },
+    {
+      title: "MVC Pattern",
+      description: "Implementing the Model-View-Controller pattern in your backend",
+      href: "/project-structure#mvc-pattern",
+      section: "Project Structure",
+    }
   ]
 
   const performSearch = useCallback(() => {
