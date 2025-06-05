@@ -323,7 +323,7 @@ export default function Home() {
             <CodeBlock
               language="javascript"
               title="server.js"
-              code={`const express = require('express');
+              code={`import express from 'express';
 const app = express();
 const PORT = process.env.PORT || 3000;
 
