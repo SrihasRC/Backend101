@@ -2,19 +2,30 @@ import { CodeBlock } from "@/components/ui/code-block";
 
 export default function SnippetsPage() {
   return (
-    <div className="container relative">
-      <div className="flex flex-col lg:flex-row lg:gap-10">
-        <main className="flex-1 prose prose-invert max-w-full py-8">
-          <h1 className="mb-8">Snippets & References</h1>
-          
-          <section id="common-patterns">
-            <h2>Common Express Patterns</h2>
+    <div className="container py-10">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-4xl font-bold tracking-tight mb-4">Snippets & References</h1>
+        <p className="text-xl text-zinc-400 mb-10">
+          A collection of ready-to-use code patterns and solutions for common backend tasks
+        </p>
+
+        <div className="space-y-16">
+          {/* Common Patterns Section */}
+          <section id="common-patterns" className="space-y-4">
+            <h2 className="text-2xl font-bold tracking-tight border-b border-zinc-800 pb-2">
+              Common Express Patterns
+            </h2>
+            <p className="text-zinc-300">
+              Essential patterns for building Express.js applications quickly and efficiently.
+            </p>
             
-            <div className="my-6">
-              <h3>Basic Express Server</h3>
-              <CodeBlock
-                language="javascript"
-                code={`import express from 'express';
+            <div className="space-y-8 py-4">
+              <div>
+                <h3 className="text-xl font-medium mb-3">Basic Express Server</h3>
+                <CodeBlock
+                  language="javascript"
+                  title="Basic Express Setup"
+                  code={`import express from 'express';
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -31,14 +42,15 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
   console.log(\`Server running on port \${PORT}\`);
 });`}
-              />
-            </div>
+                />
+              </div>
 
-            <div className="my-6">
-              <h3>Environment Variables</h3>
-              <CodeBlock
-                language="javascript"
-                code={`// Install dotenv
+              <div>
+                <h3 className="text-xl font-medium mb-3">Environment Variables</h3>
+                <CodeBlock
+                  language="javascript"
+                  title="Environment Configuration"
+                  code={`// Install dotenv
 // npm install dotenv
 
 // In your main server file
@@ -53,18 +65,27 @@ const PORT = process.env.PORT || 3000;
 // MONGODB_URI=mongodb://localhost:27017/myapp
 // JWT_SECRET=your_jwt_secret_key
 // PORT=3000`}
-              />
+                />
+              </div>
             </div>
           </section>
           
-          <section id="middleware-patterns">
-            <h2>Middleware Patterns</h2>
+          {/* Middleware Patterns Section */}
+          <section id="middleware-patterns" className="space-y-4">
+            <h2 className="text-2xl font-bold tracking-tight border-b border-zinc-800 pb-2">
+              Middleware Patterns
+            </h2>
+            <p className="text-zinc-300">
+              Reusable middleware functions for authentication, error handling, and validation.
+            </p>
             
-            <div className="my-6">
-              <h3>Authentication Middleware</h3>
-              <CodeBlock
-                language="javascript"
-                code={`import jwt from 'jsonwebtoken';
+            <div className="space-y-8 py-4">
+              <div>
+                <h3 className="text-xl font-medium mb-3">Authentication Middleware</h3>
+                <CodeBlock
+                  language="javascript"
+                  title="JWT Authentication"
+                  code={`import jwt from 'jsonwebtoken';
 
 const authenticate = (req, res, next) => {
   try {
@@ -86,14 +107,15 @@ const authenticate = (req, res, next) => {
 router.get('/protected-route', authenticate, (req, res) => {
   res.json({ message: 'Protected data', user: req.user });
 });`}
-              />
-            </div>
+                />
+              </div>
 
-            <div className="my-6">
-              <h3>Error Handling Middleware</h3>
-              <CodeBlock
-                language="javascript"
-                code={`// Custom error class
+              <div>
+                <h3 className="text-xl font-medium mb-3">Error Handling Middleware</h3>
+                <CodeBlock
+                  language="javascript"
+                  title="Global Error Handler"
+                  code={`// Custom error class
 class AppError extends Error {
   constructor(message, statusCode) {
     super(message);
@@ -148,14 +170,15 @@ app.get('/item/:id', (req, res, next) => {
     next(err);
   }
 });`}
-              />
-            </div>
+                />
+              </div>
 
-            <div className="my-6">
-              <h3>Request Validation</h3>
-              <CodeBlock
-                language="javascript"
-                code={`// Install express-validator
+              <div>
+                <h3 className="text-xl font-medium mb-3">Request Validation</h3>
+                <CodeBlock
+                  language="javascript"
+                  title="Express Validator Setup"
+                  code={`// Install express-validator
 // npm install express-validator
 
 import { body, validationResult } from 'express-validator';
@@ -180,18 +203,30 @@ const validateUser = [
 
 // Usage
 router.post('/users', validateUser, userController.createUser);`}
-              />
+                />
+              </div>
             </div>
           </section>
           
-          <section id="common-errors">
-            <h2>Common Errors & Fixes</h2>
+          {/* Common Errors Section */}
+          <section id="common-errors" className="space-y-4">
+            <h2 className="text-2xl font-bold tracking-tight border-b border-zinc-800 pb-2">
+              Common Errors & Fixes
+            </h2>
+            <p className="text-zinc-300">
+              Solutions to frequent backend development challenges and error scenarios.
+            </p>
             
-            <div className="my-6">
-              <h3>CORS Issues</h3>
-              <CodeBlock
-                language="javascript"
-                code={`// Install cors
+            <div className="space-y-8 py-4">
+              <div>
+                <h3 className="text-xl font-medium mb-3">CORS Issues</h3>
+                <p className="text-zinc-300 mb-4">
+                  Cross-Origin Resource Sharing errors are common when your frontend and backend are on different domains or ports.
+                </p>
+                <CodeBlock
+                  language="javascript"
+                  title="CORS Configuration"
+                  code={`// Install cors
 // npm install cors
 
 import cors from 'cors';
@@ -209,15 +244,22 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));`}
-              />
-              <p>Common Error: <code>Access to fetch at 'https://api.example.com/data' from origin 'https://app.example.com' has been blocked by CORS policy</code></p>
-            </div>
+                />
+                <div className="bg-zinc-900 rounded-lg p-4 border border-zinc-800 mt-2">
+                  <p className="text-amber-400">Common Error:</p>
+                  <code className="text-sm text-zinc-300">Access to fetch at 'https://api.example.com/data' from origin 'https://app.example.com' has been blocked by CORS policy</code>
+                </div>
+              </div>
 
-            <div className="my-6">
-              <h3>Unhandled Promise Rejections</h3>
-              <CodeBlock
-                language="javascript"
-                code={`// BAD: Not handling promise rejection
+              <div>
+                <h3 className="text-xl font-medium mb-3">Unhandled Promise Rejections</h3>
+                <p className="text-zinc-300 mb-4">
+                  Failing to handle promise rejections can cause Node.js applications to crash unexpectedly.
+                </p>
+                <CodeBlock
+                  language="javascript"
+                  title="Promise Error Handling"
+                  code={`// BAD: Not handling promise rejection
 app.get('/users/:id', (req, res) => {
   findUserById(req.params.id)
     .then(user => {
@@ -247,14 +289,18 @@ app.get('/users/:id', (req, res, next) => {
     })
     .catch(err => next(err));
 });`}
-              />
-            </div>
+                />
+              </div>
 
-            <div className="my-6">
-              <h3>MongoDB Connection Issues</h3>
-              <CodeBlock
-                language="javascript"
-                code={`// Robust MongoDB connection setup
+              <div>
+                <h3 className="text-xl font-medium mb-3">MongoDB Connection Issues</h3>
+                <p className="text-zinc-300 mb-4">
+                  Proper MongoDB connection setup with error handling and graceful shutdown.
+                </p>
+                <CodeBlock
+                  language="javascript"
+                  title="Robust MongoDB Connection"
+                  code={`// Robust MongoDB connection setup
 import mongoose from 'mongoose';
 
 const connectDB = async () => {
@@ -288,18 +334,30 @@ process.on('SIGINT', async () => {
 });
 
 export default connectDB;`}
-              />
+                />
+              </div>
             </div>
           </section>
           
-          <section id="utility-functions">
-            <h2>Utility Functions</h2>
+          {/* Utility Functions Section */}
+          <section id="utility-functions" className="space-y-4">
+            <h2 className="text-2xl font-bold tracking-tight border-b border-zinc-800 pb-2">
+              Utility Functions
+            </h2>
+            <p className="text-zinc-300">
+              Ready-to-use helpers for common backend tasks like pagination and file handling.
+            </p>
             
-            <div className="my-6">
-              <h3>Pagination Helper</h3>
-              <CodeBlock
-                language="javascript"
-                code={`// Pagination middleware/utility
+            <div className="space-y-8 py-4">
+              <div>
+                <h3 className="text-xl font-medium mb-3">Pagination Helper</h3>
+                <p className="text-zinc-300 mb-4">
+                  Clean implementation of pagination for MongoDB queries with flexible options.
+                </p>
+                <CodeBlock
+                  language="javascript"
+                  title="Reusable Pagination Function"
+                  code={`// Pagination middleware/utility
 const paginate = async (model, req, options = {}) => {
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
@@ -353,14 +411,18 @@ router.get('/posts', async (req, res, next) => {
     next(error);
   }
 });`}
-              />
-            </div>
+                />
+              </div>
 
-            <div className="my-6">
-              <h3>File Upload Helper</h3>
-              <CodeBlock
-                language="javascript"
-                code={`// Install multer
+              <div>
+                <h3 className="text-xl font-medium mb-3">File Upload Helper</h3>
+                <p className="text-zinc-300 mb-4">
+                  Manage file uploads securely with validation and configurable storage options.
+                </p>
+                <CodeBlock
+                  language="javascript"
+                  title="Multer File Upload Configuration"
+                  code={`// Install multer
 // npm install multer
 
 import multer from 'multer';
@@ -419,10 +481,22 @@ router.post('/upload-multiple', upload.array('files', 5), (req, res) => {
     files: req.files
   });
 });`}
-              />
+                />
+              </div>
+
+              <div className="bg-blue-900/30 border border-blue-800 rounded-lg p-6 mt-8">
+                <h3 className="text-lg font-semibold text-blue-400 mb-2">Pro Tips</h3>
+                <ul className="list-disc list-inside space-y-2 text-zinc-200">
+                  <li>Keep utility functions in separate modules for better organization</li>
+                  <li>Use TypeScript interfaces to document expected parameters</li>
+                  <li>Add proper error handling to all utility functions</li>
+                  <li>Write thorough tests for utility functions as they're often critical infrastructure</li>
+                  <li>Consider publishing frequently used utilities as internal npm packages</li>
+                </ul>
+              </div>
             </div>
           </section>
-        </main>
+        </div>
       </div>
     </div>
   );
